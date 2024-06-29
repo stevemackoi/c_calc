@@ -13,20 +13,20 @@
 
 /* Function Prototypes */
 void print_usage(void);
-int32_t rotate_left(int32_t value, int32_t count);
-int32_t rotate_right(int32_t value, int32_t count);
+uint32_t rotate_left(uint32_t value, uint32_t count);
+uint32_t rotate_right(uint32_t value, uint32_t count);
 int32_t perform_addition(int32_t operand1, int32_t operand2);
 int32_t perform_subtraction(int32_t operand1, int32_t operand2);
 int32_t perform_multiplication(int32_t operand1, int32_t operand2);
 double perform_division(int32_t operand1, int32_t operand2);
 int32_t perform_modulo(int32_t operand1, int32_t operand2);
-int32_t perform_left_shift(int32_t operand1, int32_t operand2);
-int32_t perform_right_shift(int32_t operand1, int32_t operand2);
-int32_t perform_and(int32_t operand1, int32_t operand2);
-int32_t perform_or(int32_t operand1, int32_t operand2);
-int32_t perform_xor(int32_t operand1, int32_t operand2);
-int32_t perform_rotate_left(int32_t operand1, int32_t operand2);
-int32_t perform_rotate_right(int32_t operand1, int32_t operand2);
+uint32_t perform_left_shift(uint32_t operand1, uint32_t operand2);
+uint32_t perform_right_shift(uint32_t operand1, uint32_t operand2);
+uint32_t perform_and(uint32_t operand1, uint32_t operand2);
+uint32_t perform_or(uint32_t operand1, uint32_t operand2);
+uint32_t perform_xor(uint32_t operand1, uint32_t operand2);
+uint32_t perform_rotate_left(uint32_t operand1, uint32_t operand2);
+uint32_t perform_rotate_right(uint32_t operand1, uint32_t operand2);
 int32_t perform_calculation(int32_t operand1, const char *operator, int32_t operand2);
 int validate_operands(int32_t operand1, int32_t operand2, const char *operator);
 void handle_error(const char *message);
@@ -58,9 +58,9 @@ void print_usage(void)
  * @param    count   The number of positions to rotate
  * @return   Rotated value
  ******************************************************************************/
-int32_t rotate_left(int32_t value, int32_t count)
+uint32_t rotate_left(uint32_t value, uint32_t count)
 {
-    int mask = (sizeof(value) * 8) - 1;
+    uint32_t mask = (sizeof(value) * 8) - 1;
     count &= mask;
     return (value << count) | (value >> (-count & mask));
 }
@@ -71,9 +71,9 @@ int32_t rotate_left(int32_t value, int32_t count)
  * @param    count   The number of positions to rotate
  * @return   Rotated value
  ******************************************************************************/
-int32_t rotate_right(int32_t value, int32_t count)
+uint32_t rotate_right(uint32_t value, uint32_t count)
 {
-    int mask = (sizeof(value) * 8) - 1;
+    uint32_t mask = (sizeof(value) * 8) - 1;
     count &= mask;
     return (value >> count) | (value << (-count & mask));
 }
@@ -149,7 +149,7 @@ int32_t perform_modulo(int32_t operand1, int32_t operand2)
  * @param    operand2    Second operand
  * @return   Result of left shift
  ******************************************************************************/
-int32_t perform_left_shift(int32_t operand1, int32_t operand2)
+uint32_t perform_left_shift(uint32_t operand1, uint32_t operand2)
 {
     return operand1 << operand2;
 }
@@ -160,7 +160,7 @@ int32_t perform_left_shift(int32_t operand1, int32_t operand2)
  * @param    operand2    Second operand
  * @return   Result of right shift
  ******************************************************************************/
-int32_t perform_right_shift(int32_t operand1, int32_t operand2)
+uint32_t perform_right_shift(uint32_t operand1, uint32_t operand2)
 {
     return operand1 >> operand2;
 }
@@ -171,7 +171,7 @@ int32_t perform_right_shift(int32_t operand1, int32_t operand2)
  * @param    operand2    Second operand
  * @return   Result of AND operation
  ******************************************************************************/
-int32_t perform_and(int32_t operand1, int32_t operand2)
+uint32_t perform_and(uint32_t operand1, uint32_t operand2)
 {
     return operand1 & operand2;
 }
@@ -182,7 +182,7 @@ int32_t perform_and(int32_t operand1, int32_t operand2)
  * @param    operand2    Second operand
  * @return   Result of OR operation
  ******************************************************************************/
-int32_t perform_or(int32_t operand1, int32_t operand2)
+uint32_t perform_or(uint32_t operand1, uint32_t operand2)
 {
     return operand1 | operand2;
 }
@@ -193,7 +193,7 @@ int32_t perform_or(int32_t operand1, int32_t operand2)
  * @param    operand2    Second operand
  * @return   Result of XOR operation
  ******************************************************************************/
-int32_t perform_xor(int32_t operand1, int32_t operand2)
+uint32_t perform_xor(uint32_t operand1, uint32_t operand2)
 {
     return operand1 ^ operand2;
 }
@@ -204,7 +204,7 @@ int32_t perform_xor(int32_t operand1, int32_t operand2)
  * @param    operand2    Second operand
  * @return   Result of rotate left
  ******************************************************************************/
-int32_t perform_rotate_left(int32_t operand1, int32_t operand2)
+uint32_t perform_rotate_left(uint32_t operand1, uint32_t operand2)
 {
     return rotate_left(operand1, operand2);
 }
@@ -215,7 +215,7 @@ int32_t perform_rotate_left(int32_t operand1, int32_t operand2)
  * @param    operand2    Second operand
  * @return   Result of rotate right
  ******************************************************************************/
-int32_t perform_rotate_right(int32_t operand1, int32_t operand2)
+uint32_t perform_rotate_right(uint32_t operand1, uint32_t operand2)
 {
     return rotate_right(operand1, operand2);
 }
@@ -229,51 +229,51 @@ int32_t perform_rotate_right(int32_t operand1, int32_t operand2)
  ******************************************************************************/
 int32_t perform_calculation(int32_t operand1, const char *operator, int32_t operand2)
 {
-    if (strcmp(operator, "+") == 0)
+    if (strncmp(operator, "+", sizeof("+")) == 0)
     {
         return perform_addition(operand1, operand2);
     }
-    else if (strcmp(operator, "-") == 0)
+    else if (strncmp(operator, "-", sizeof("-")) == 0)
     {
         return perform_subtraction(operand1, operand2);
     }
-    else if (strcmp(operator, "*") == 0)
+    else if (strncmp(operator, "*", sizeof("*")) == 0)
     {
         return perform_multiplication(operand1, operand2);
     }
-    else if (strcmp(operator, "/") == 0)
+    else if (strncmp(operator, "/", sizeof("/")) == 0)
     {
         return (int32_t)perform_division(operand1, operand2);
     }
-    else if (strcmp(operator, "%") == 0)
+    else if (strncmp(operator, "%", sizeof("%")) == 0)
     {
         return perform_modulo(operand1, operand2);
     }
-    else if (strcmp(operator, "<<") == 0)
+    else if (strncmp(operator, "<<", sizeof("<<")) == 0)
     {
         return perform_left_shift(operand1, operand2);
     }
-    else if (strcmp(operator, ">>") == 0)
+    else if (strncmp(operator, ">>", sizeof(">>")) == 0)
     {
         return perform_right_shift(operand1, operand2);
     }
-    else if (strcmp(operator, "&") == 0)
+    else if (strncmp(operator, "&", sizeof("&")) == 0)
     {
         return perform_and(operand1, operand2);
     }
-    else if (strcmp(operator, "|") == 0)
+    else if (strncmp(operator, "|", sizeof("|")) == 0)
     {
         return perform_or(operand1, operand2);
     }
-    else if (strcmp(operator, "^") == 0)
+    else if (strncmp(operator, "^", sizeof("^")) == 0)
     {
         return perform_xor(operand1, operand2);
     }
-    else if (strcmp(operator, "<<<") == 0)
+    else if (strncmp(operator, "<<<", sizeof("<<<")) == 0)
     {
         return perform_rotate_left(operand1, operand2);
     }
-    else if (strcmp(operator, ">>>") == 0)
+    else if (strncmp(operator, ">>>", sizeof(">>>")) == 0)
     {
         return perform_rotate_right(operand1, operand2);
     }
@@ -293,10 +293,10 @@ int32_t perform_calculation(int32_t operand1, const char *operator, int32_t oper
  ******************************************************************************/
 int validate_operands(int32_t operand1, int32_t operand2, const char *operator)
 {
-    if ((strcmp(operator, "<<") == 0 || strcmp(operator, ">>") == 0 ||
-         strcmp(operator, "&") == 0 || strcmp(operator, "|") == 0 ||
-         strcmp(operator, "^") == 0 || strcmp(operator, "<<<") == 0 ||
-         strcmp(operator, ">>>") == 0) &&
+    if ((strncmp(operator, "<<", sizeof("<<")) == 0 || strncmp(operator, ">>", sizeof(">>")) == 0 ||
+         strncmp(operator, "&", sizeof("&")) == 0 || strncmp(operator, "|", sizeof("|")) == 0 ||
+         strncmp(operator, "^", sizeof("^")) == 0 || strncmp(operator, "<<<", sizeof("<<<")) == 0 ||
+         strncmp(operator, ">>>", sizeof(">>>")) == 0) &&
         (operand1 < 0 || operand2 < 0))
     {
         handle_error("Negative numbers not accepted for bit related equations.\n");
