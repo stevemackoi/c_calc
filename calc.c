@@ -131,7 +131,7 @@ int32_t perform_multiplication(int32_t operand1, int32_t operand2)
  ******************************************************************************/
 double perform_division(int32_t operand1, int32_t operand2)
 {
-    if (operand2 == 0) {
+    if (0 == operand2) {
         handle_error("Error! Division by zero.\n");
         exit(EXIT_FAILURE);
     }
@@ -146,7 +146,7 @@ double perform_division(int32_t operand1, int32_t operand2)
  ******************************************************************************/
 int32_t perform_modulo(int32_t operand1, int32_t operand2)
 {
-    if (operand2 == 0) {
+    if (0 == operand2) {
         handle_error("Error! Modulo by zero.\n");
         exit(EXIT_FAILURE);
     }
@@ -220,12 +220,12 @@ void perform_calculation(uint32_t operand1, const char *operator, uint32_t opera
     uint32_t result_uint;
 
     // Ensure the operator is long enough to check the extended operators
-    if (strlen(operator) == 3) {
-        if (strncmp(operator, "<<<", 3) == 0) {
+    if (3 == strlen(operator)) {
+        if (0 == strncmp(operator, "<<<", 3)) {
             result_uint = rotate_left(operand1, operand2);
             printf("Result: %u\n", result_uint);
             return;
-        } else if (strncmp(operator, ">>>", 3) == 0) {
+        } else if (0 == strncmp(operator, ">>>", 3)) {
             result_uint = rotate_right(operand1, operand2);
             printf("Result: %u\n", result_uint);
             return;
@@ -314,9 +314,9 @@ void perform_calculation(uint32_t operand1, const char *operator, uint32_t opera
  ******************************************************************************/
 int validate_operands(int32_t operand1, int32_t operand2, const char *operator)
 {
-    if (strncmp(operator, "/", 1) == 0 || strncmp(operator, "%", 1) == 0)
+    if (0 == strncmp(operator, "/", 1) || 0 == strncmp(operator, "%", 1))
     {
-        if (operand2 == 0)
+        if (0 == operand2)
         {
             handle_error("Error! Division or modulo by zero.\n");
             return 0;
