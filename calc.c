@@ -13,22 +13,24 @@
 #include <limits.h>
 
 // Function Prototypes
-void print_usage(void);
+void     print_usage(void);
 uint32_t rotate_left(uint32_t value, uint32_t count);
 uint32_t rotate_right(uint32_t value, uint32_t count);
-int32_t perform_addition(int32_t operand1, int32_t operand2);
-int32_t perform_subtraction(int32_t operand1, int32_t operand2);
-int32_t perform_multiplication(int32_t operand1, int32_t operand2);
-double perform_division(int32_t operand1, int32_t operand2);
-int32_t perform_modulo(int32_t operand1, int32_t operand2);
+int32_t  perform_addition(int32_t operand1, int32_t operand2);
+int32_t  perform_subtraction(int32_t operand1, int32_t operand2);
+int32_t  perform_multiplication(int32_t operand1, int32_t operand2);
+double   perform_division(int32_t operand1, int32_t operand2);
+int32_t  perform_modulo(int32_t operand1, int32_t operand2);
 uint32_t perform_left_shift(uint32_t operand1, uint32_t operand2);
 uint32_t perform_right_shift(uint32_t operand1, uint32_t operand2);
 uint32_t perform_and(uint32_t operand1, uint32_t operand2);
 uint32_t perform_or(uint32_t operand1, uint32_t operand2);
 uint32_t perform_xor(uint32_t operand1, uint32_t operand2);
-void perform_calculation(uint32_t operand1, const char *operator, uint32_t operand2);
-int validate_operands(int32_t operand1, int32_t operand2, const char *operator);
-void handle_error(const char *message);
+void     perform_calculation(
+        uint32_t operand1, const char * operator, uint32_t operand2);
+int validate_operands(
+    int32_t operand1, int32_t operand2, const char * operator);
+void handle_error(const char * message);
 
 /******************************************************************************
  * @brief    Print the usage of the program
@@ -84,7 +86,8 @@ uint32_t rotate_right(uint32_t value, uint32_t count)
 int32_t perform_addition(int32_t operand1, int32_t operand2)
 {
     int64_t result = (int64_t)operand1 + operand2;
-    if (result > INT32_MAX || result < INT32_MIN) {
+    if (result > INT32_MAX || result < INT32_MIN)
+    {
         handle_error("Error! Addition result out of bounds.\n");
         exit(EXIT_FAILURE);
     }
@@ -100,7 +103,8 @@ int32_t perform_addition(int32_t operand1, int32_t operand2)
 int32_t perform_subtraction(int32_t operand1, int32_t operand2)
 {
     int64_t result = (int64_t)operand1 - operand2;
-    if (result > INT32_MAX || result < INT32_MIN) {
+    if (result > INT32_MAX || result < INT32_MIN)
+    {
         handle_error("Error! Subtraction result out of bounds.\n");
         exit(EXIT_FAILURE);
     }
@@ -116,7 +120,8 @@ int32_t perform_subtraction(int32_t operand1, int32_t operand2)
 int32_t perform_multiplication(int32_t operand1, int32_t operand2)
 {
     int64_t result = (int64_t)operand1 * operand2;
-    if (result > INT32_MAX || result < INT32_MIN) {
+    if (result > INT32_MAX || result < INT32_MIN)
+    {
         handle_error("Error! Multiplication result out of bounds.\n");
         exit(EXIT_FAILURE);
     }
@@ -131,7 +136,8 @@ int32_t perform_multiplication(int32_t operand1, int32_t operand2)
  ******************************************************************************/
 double perform_division(int32_t operand1, int32_t operand2)
 {
-    if (0 == operand2) {
+    if (0 == operand2)
+    {
         handle_error("Error! Division by zero.\n");
         exit(EXIT_FAILURE);
     }
@@ -146,7 +152,8 @@ double perform_division(int32_t operand1, int32_t operand2)
  ******************************************************************************/
 int32_t perform_modulo(int32_t operand1, int32_t operand2)
 {
-    if (0 == operand2) {
+    if (0 == operand2)
+    {
         handle_error("Error! Modulo by zero.\n");
         exit(EXIT_FAILURE);
     }
@@ -214,18 +221,23 @@ uint32_t perform_xor(uint32_t operand1, uint32_t operand2)
  * @param    operator    Operator as string
  * @param    operand2    Second operand
  ******************************************************************************/
-void perform_calculation(uint32_t operand1, const char *operator, uint32_t operand2)
+void perform_calculation(
+    uint32_t operand1, const char * operator, uint32_t operand2)
 {
-    int32_t result;
+    int32_t  result;
     uint32_t result_uint;
 
     // Ensure the operator is long enough to check the extended operators
-    if (3 == strlen(operator)) {
-        if (0 == strncmp(operator, "<<<", 3)) {
+    if (3 == strlen(operator))
+    {
+        if (0 == strncmp(operator, "<<<", 3))
+        {
             result_uint = rotate_left(operand1, operand2);
             printf("Result: %u\n", result_uint);
             return;
-        } else if (0 == strncmp(operator, ">>>", 3)) {
+        }
+        else if (0 == strncmp(operator, ">>>", 3))
+        {
             result_uint = rotate_right(operand1, operand2);
             printf("Result: %u\n", result_uint);
             return;
@@ -246,12 +258,14 @@ void perform_calculation(uint32_t operand1, const char *operator, uint32_t opera
             break;
 
         case '*':
-            result = perform_multiplication((int32_t)operand1, (int32_t)operand2);
+            result =
+                perform_multiplication((int32_t)operand1, (int32_t)operand2);
             printf("Result: %d\n", result);
             break;
 
         case '/':
-            printf("Result: %.2f\n", perform_division((int32_t)operand1, (int32_t)operand2));
+            printf("Result: %.2f\n",
+                   perform_division((int32_t)operand1, (int32_t)operand2));
             break;
 
         case '%':
@@ -260,25 +274,34 @@ void perform_calculation(uint32_t operand1, const char *operator, uint32_t opera
             break;
 
         case '<':
-            if (operator[1] == '<') {
+            if (operator[1] == '<')
+            {
                 result_uint = perform_left_shift(operand1, operand2);
                 printf("Result: %u\n", result_uint);
-            } else {
+            }
+            else
+            {
                 handle_error("Error! Unsupported operator.\n");
                 exit(EXIT_FAILURE);
             }
             break;
 
         case '>':
-            if (operator[1] == '>') {
-                if (operator[2] == '>') {
+            if (operator[1] == '>')
+            {
+                if (operator[2] == '>')
+                {
                     result_uint = rotate_right(operand1, operand2);
                     printf("Result: %u\n", result_uint);
-                } else {
+                }
+                else
+                {
                     result_uint = perform_right_shift(operand1, operand2);
                     printf("Result: %u\n", result_uint);
                 }
-            } else {
+            }
+            else
+            {
                 handle_error("Error! Unsupported operator.\n");
                 exit(EXIT_FAILURE);
             }
@@ -312,7 +335,7 @@ void perform_calculation(uint32_t operand1, const char *operator, uint32_t opera
  * @param    operator    Operator as string
  * @return   1 if valid, 0 otherwise
  ******************************************************************************/
-int validate_operands(int32_t operand1, int32_t operand2, const char *operator)
+int validate_operands(int32_t operand1, int32_t operand2, const char * operator)
 {
     if (0 == strncmp(operator, "/", 1) || 0 == strncmp(operator, "%", 1))
     {
@@ -329,7 +352,7 @@ int validate_operands(int32_t operand1, int32_t operand2, const char *operator)
  * @brief    Handle errors
  * @param    message Error message
  ******************************************************************************/
-void handle_error(const char *message)
+void handle_error(const char * message)
 {
     fprintf(stderr, "%s", message);
 }
@@ -337,33 +360,37 @@ void handle_error(const char *message)
 /******************************************************************************
  * @brief    Main function
  ******************************************************************************/
-int main(int argc, char *argv[])
+int main(int argc, char * argv[])
 {
-    if (argc != 4) {
+    if (argc != 4)
+    {
         print_usage();
         return EXIT_FAILURE;
     }
 
-    char *endptr;
+    char * endptr;
     errno = 0;
 
     // Convert operand1
     uint32_t operand1 = strtoul(argv[1], &endptr, 10);
-    if (*endptr != '\0' || errno == ERANGE) {
+    if (*endptr != '\0' || errno == ERANGE)
+    {
         handle_error("Error! Invalid operand1.\n");
         return EXIT_FAILURE;
     }
 
     // Convert operand2
     uint32_t operand2 = strtoul(argv[3], &endptr, 10);
-    if (*endptr != '\0' || errno == ERANGE) {
+    if (*endptr != '\0' || errno == ERANGE)
+    {
         handle_error("Error! Invalid operand2.\n");
         return EXIT_FAILURE;
     }
 
     // Validate operands
-    const char *operator = argv[2];
-    if (!validate_operands((int32_t)operand1, (int32_t)operand2, operator)) {
+    const char * operator= argv[2];
+    if (!validate_operands((int32_t)operand1, (int32_t)operand2, operator))
+    {
         return EXIT_FAILURE;
     }
 
