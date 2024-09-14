@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file    simplecalc.c
  * @brief   Simple calculator program
- * @version 1.4
- * @date    July 2024
+ * @version 1.5
+ * @date    September 2024
  ******************************************************************************/
 
 #include <stdio.h>
@@ -11,6 +11,8 @@
 #include <stdint.h>
 #include <errno.h>
 #include <limits.h>
+#define BITS_IN_UINT32 32
+#define BASE_DECIMAL   10
 
 // Function Prototypes
 void     print_usage(void);
@@ -28,8 +30,7 @@ uint32_t perform_or(uint32_t operand1, uint32_t operand2);
 uint32_t perform_xor(uint32_t operand1, uint32_t operand2);
 void     perform_calculation(
         uint32_t operand1, const char * operator, uint32_t operand2);
-int validate_operands(
-    int32_t operand1, int32_t operand2, const char * operator);
+int  validate_operands(int32_t operand2, const char * operator);
 void handle_error(const char * message);
 
 /******************************************************************************
@@ -61,8 +62,8 @@ void print_usage(void)
  ******************************************************************************/
 uint32_t rotate_left(uint32_t value, uint32_t count)
 {
-    count = count % 32; // Ensure the count is within the 0-31 range
-    return (value << count) | (value >> (32 - count));
+    count = count % BITS_IN_UINT32; // Ensure the count is within the 0-31 range
+    return (value << count) | (value >> (BITS_IN_UINT32 - count));
 }
 
 /******************************************************************************
@@ -73,8 +74,8 @@ uint32_t rotate_left(uint32_t value, uint32_t count)
  ******************************************************************************/
 uint32_t rotate_right(uint32_t value, uint32_t count)
 {
-    count = count % 32; // Ensure the count is within the 0-31 range
-    return (value >> count) | (value << (32 - count));
+    count = count % BITS_IN_UINT32; // Ensure the count is within the 0-31 range
+    return (value >> count) | (value << (BITS_IN_UINT32 - count));
 }
 
 /******************************************************************************
@@ -236,7 +237,7 @@ void perform_calculation(
             printf("Result: %u\n", result_uint);
             return;
         }
-        else if (0 == strncmp(operator, ">>>", 3))
+        if (0 == strncmp(operator, ">>>", 3))
         {
             result_uint = rotate_right(operand1, operand2);
             printf("Result: %u\n", result_uint);
@@ -330,12 +331,11 @@ void perform_calculation(
 
 /******************************************************************************
  * @brief    Validate operands for division and modulo operations
- * @param    operand1    First operand
- * @param    operand2    Second operand
+ * @param    operand2    Second operand (divisor)
  * @param    operator    Operator as string
  * @return   1 if valid, 0 otherwise
  ******************************************************************************/
-int validate_operands(int32_t operand1, int32_t operand2, const char * operator)
+int validate_operands(int32_t operand2, const char * operator)
 {
     if (0 == strncmp(operator, "/", 1) || 0 == strncmp(operator, "%", 1))
     {
@@ -372,7 +372,7 @@ int main(int argc, char * argv[])
     errno = 0;
 
     // Convert operand1
-    uint32_t operand1 = strtoul(argv[1], &endptr, 10);
+    uint32_t operand1 = strtoul(argv[1], &endptr, BASE_DECIMAL);
     if (*endptr != '\0' || errno == ERANGE)
     {
         handle_error("Error! Invalid operand1.\n");
@@ -380,7 +380,7 @@ int main(int argc, char * argv[])
     }
 
     // Convert operand2
-    uint32_t operand2 = strtoul(argv[3], &endptr, 10);
+    uint32_t operand2 = strtoul(argv[3], &endptr, BASE_DECIMAL);
     if (*endptr != '\0' || errno == ERANGE)
     {
         handle_error("Error! Invalid operand2.\n");
@@ -389,7 +389,7 @@ int main(int argc, char * argv[])
 
     // Validate operands
     const char * operator= argv[2];
-    if (!validate_operands((int32_t)operand1, (int32_t)operand2, operator))
+    if (!validate_operands((int32_t)operand2, operator))
     {
         return EXIT_FAILURE;
     }
